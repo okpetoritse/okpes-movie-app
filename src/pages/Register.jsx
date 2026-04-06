@@ -51,7 +51,7 @@ const Register = () => {
 
       <div className="auth-card">
         <h1 className="auth-title">Create Account</h1>
-        <p className="auth-subtitle">Join Okpe's and start tracking your movies</p>
+        <p className="auth-subtitle">Join MyFlix and start tracking your movies</p>
 
         {error && <div className="auth-error">{error}</div>}
 

@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="container nav-content">
         <Link to="/" className="brand">
           <Film className="brand-icon" />
-          <span className="brand-text">Okpe's</span>
+          <span className="brand-text">MyFlix</span>
         </Link>
         <div className="nav-search">
           <form onSubmit={handleSearch} className="search-form">
