@@ -1,0 +1,137 @@
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-content {
+  flex: 1;
+  padding: 2rem 1.5rem 8rem;
+}
+
+.search-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-label {
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.accent { color: var(--color-primary); }
+
+.filter-toggle.active {
+  background: rgba(229, 9, 20, 0.15);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.home-header {
+  margin-bottom: 2rem;
+}
+
+.year-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.year-divider::before,
+.year-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.home-header {
+  margin-bottom: 3rem;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.home-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.error-state, .empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error-state h2, .empty-state h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+/* ── Responsive grid breakpoints ── */
+
+/* Mobile default: 2 cols */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 480px) {
+  .movies-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+}
+
+@media (min-width: 640px) {
+  .movies-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+}
+
+@media (min-width: 900px) {
+  .movies-grid { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
+}
+
+@media (min-width: 1200px) {
+  .movies-grid { grid-template-columns: repeat(5, 1fr); gap: 2rem; }
+}
+
+/* Search toolbar wrapping */
+@media (max-width: 480px) {
+  .search-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .filter-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+  .search-label {
+    font-size: 1rem;
+  }
+  .year-divider {
+    font-size: 1rem;
+    padding: 1.25rem 0 0.75rem;
+  }
+  .home-content {
+    padding: 1.25rem 0.75rem 6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .movies-grid { grid-template-columns: 1fr; }
+}

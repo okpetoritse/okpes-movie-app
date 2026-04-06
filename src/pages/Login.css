@@ -1,0 +1,246 @@
+/* ───────────────────────────────────────────
+   AUTH PAGE — LOGIN & REGISTER
+─────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;900&display=swap');
+
+/* ── Full-screen wrapper ── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* ── Dark app-matching background ── */
+.auth-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #141414;
+  z-index: 0;
+}
+
+.auth-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(229, 9, 20, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 100%, rgba(229, 9, 20, 0.10) 0%, transparent 65%);
+}
+
+/* ── Card ── */
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 3rem 3.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  animation: authSlideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(28px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+@keyframes authSlideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Title ── */
+.auth-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 2rem;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+/* ── Social buttons row ── */
+.auth-socials {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 1.4rem;
+}
+
+.social-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e2e2;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  outline: none;
+}
+
+.social-btn:hover {
+  border-color: #b0b0b0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.social-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Divider text ── */
+.auth-divider-text {
+  font-size: 0.88rem;
+  color: #888;
+  margin: 0 0 1.4rem;
+  text-align: center;
+}
+
+/* ── Error ── */
+.auth-error {
+  width: 100%;
+  background: rgba(220, 50, 50, 0.09);
+  color: #c0392b;
+  font-size: 0.85rem;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  border-left: 3px solid #c0392b;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+/* ── Form ── */
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Inputs ── */
+.auth-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  background: #f0f0f0;
+  font-size: 1rem;
+  font-family: 'Raleway', sans-serif;
+  color: #2a2a2a;
+  outline: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-bottom: 0.9rem;
+  box-sizing: border-box;
+}
+
+.auth-input::placeholder {
+  color: #aaa;
+}
+
+.auth-input:focus {
+  background: #e8e8e8;
+  box-shadow: 0 0 0 3px rgba(0, 160, 150, 0.18);
+}
+
+/* ── Forgot password ── */
+.auth-forgot {
+  font-size: 0.88rem;
+  color: #555;
+  text-align: center;
+  margin: 0.1rem 0 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.auth-forgot:hover {
+  color: #009688;
+}
+
+/* ── Sign in button ── */
+.auth-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #E50914 0%, #ff3b3b 100%);
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 6px 22px rgba(229, 9, 20, 0.4);
+  outline: none;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.auth-submit-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(229, 9, 20, 0.5);
+}
+
+.auth-submit-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
+}
+
+/* ── Sign-up link ── */
+.auth-signup-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #009688;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.auth-signup-link:hover {
+  color: #00695c;
+  text-decoration: underline;
+}
+
+/* ── Register page subtitle ── */
+.auth-subtitle {
+  font-size: 0.9rem;
+  color: #777;
+  margin: -1rem 0 1.2rem;
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .auth-card {
+    padding: 2rem 1.5rem 1.75rem;
+    border-radius: 16px;
+  }
+  .auth-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .social-btn { width: 46px; height: 46px; border-radius: 10px; }
+  .auth-socials { gap: 0.6rem; }
+}
+
+@media (max-width: 380px) {
+  .auth-card { padding: 1.75rem 1.1rem 1.5rem; }
+  .auth-title { font-size: 1.75rem; }
+  .auth-input { padding: 0.85rem 1rem; font-size: 0.95rem; }
+  .auth-submit-btn { padding: 0.85rem; font-size: 0.9rem; }
+  .auth-socials { gap: 0.45rem; }
+  .social-btn { width: 42px; height: 42px; }
+}
