@@ -5,24 +5,22 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    // Improve Lighthouse scores with better chunking
+    // Vite 8 (rolldown) requires manualChunks as a function, not an object
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split vendor libs into separate chunk (better caching)
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          icons:  ['lucide-react'],
-          axios:  ['axios'],
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom')) {
+            return 'vendor';
+          }
+          if (id.includes('node_modules/lucide-react')) {
+            return 'icons';
+          }
+          if (id.includes('node_modules/axios')) {
+            return 'axios';
+          }
         },
       },
     },
-    // Reduce chunk size warnings threshold
     chunkSizeWarningLimit: 600,
-    // Enable CSS code splitting
-    cssCodeSplit: true,
-    // Minify output
-    minify: 'esbuild',
-    // Generate source maps for debugging (disable in final prod if needed)
-    sourcemap: false,
   },
 })
