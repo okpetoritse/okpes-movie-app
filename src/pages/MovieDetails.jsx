@@ -5,6 +5,7 @@ import { useWatchlist } from '../context/WatchlistContext';
 import { useReviews } from '../context/ReviewsContext';
 import { useCustomLists } from '../context/CustomListsContext';
 import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
 import CastCard from '../components/CastCard';
 import MovieRow from '../components/MovieRow';
 import StarRating from '../components/StarRating';
@@ -14,6 +15,7 @@ import './MovieDetails.css';
 const MovieDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,11 +88,13 @@ const MovieDetails = () => {
   const actors = movie.Actors !== 'N/A' ? movie.Actors.split(', ') : [];
 
   const handleWatchlistToggle = () => {
+    if (!user) { navigate('/login'); return; }
     if (bookmarked) removeFromWatchlist(movie.imdbID);
     else addToWatchlist({ imdbID: movie.imdbID, Title: movie.Title, Year: movie.Year, Type: movie.Type, Poster: movie.Poster, Genre: movie.Genre, Runtime: movie.Runtime });
   };
 
   const handleSubmitReview = () => {
+    if (!user) { navigate('/login'); return; }
     if (!pendingRating) return;
     saveReview(movie.imdbID, { rating: pendingRating, text: reviewText, title: movie.Title, poster: movie.Poster, year: movie.Year });
   };
@@ -112,7 +116,7 @@ const MovieDetails = () => {
               <Bookmark size={20} fill={bookmarked ? 'currentColor' : 'none'} />
               {bookmarked ? 'Saved to Watchlist' : 'Save to Watch Later'}
             </button>
-            <button className="btn-watchlist-large" onClick={() => setShowListModal(true)}>
+            <button className="btn-watchlist-large" onClick={() => user ? setShowListModal(true) : navigate('/login')}>
               <ListPlus size={20} /> Add to Custom List
             </button>
           </div>

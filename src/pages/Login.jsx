@@ -35,20 +35,39 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (email.trim() && password.trim()) {
-      const success = login(email, password);
-      if (success) {
+      try {
+        setLoading(true);
+        await login(email, password);
         navigate('/');
-      } else {
-        setError('Invalid username or password.');
+      } catch (err) {
+        if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+           setError('Invalid email or password.');
+        } else {
+           setError('Failed to log in. Please try again.');
+        }
+      } finally {
+        setLoading(false);
       }
     } else {
       setError('Please fill in both fields.');
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      await loginWithGoogle();
+      navigate('/');
+    } catch (err) {
+      setError('Google sign-in failed or was cancelled.');
+      setLoading(false);
     }
   };
 
@@ -63,7 +82,7 @@ const Login = () => {
 
         {/* Social Buttons */}
         <div className="auth-socials">
-          <button type="button" className="social-btn" aria-label="Sign in with Google">
+          <button type="button" className="social-btn" aria-label="Sign in with Google" onClick={handleGoogleLogin} disabled={loading}>
             <GoogleIcon />
           </button>
           <button type="button" className="social-btn" aria-label="Sign in with Facebook">
@@ -103,8 +122,8 @@ const Login = () => {
 
           <p className="auth-forgot">Forget Your Password?</p>
 
-          <button type="submit" id="login-submit" className="auth-submit-btn">
-            SIGN IN
+          <button type="submit" id="login-submit" className="auth-submit-btn" disabled={loading}>
+            {loading ? 'SIGNING IN...' : 'SIGN IN'}
           </button>
         </form>
 

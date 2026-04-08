@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bookmark } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { useWatchlist } from '../context/WatchlistContext';
 import './MovieCard.css';
 
 const MovieCard = ({ movie }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const { isBookmarked, addToWatchlist, removeFromWatchlist } = useWatchlist();
   const cardRef = useRef(null);
   const [transformStyle, setTransformStyle] = useState('');
@@ -15,6 +18,10 @@ const MovieCard = ({ movie }) => {
 
   const toggleWatchlist = (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     if (bookmarked) {
       removeFromWatchlist(movie.imdbID);
     } else {

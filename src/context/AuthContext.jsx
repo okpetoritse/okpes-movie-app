@@ -1,4 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged,
+  updateProfile,
+  signInWithPopup
+} from 'firebase/auth';
+import { auth, googleProvider } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -8,65 +17,70 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Users stored as [{ email, password, username }, ...]
-  const [users, setUsers] = useState([]);
-
+  // Listen to Firebase Auth state changes
   useEffect(() => {
-    const storedUsers = localStorage.getItem('movieAppUsersDB');
-    if (storedUsers) setUsers(JSON.parse(storedUsers));
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          username: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+          photoURL: firebaseUser.photoURL
+        });
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
 
-    const storedSession = localStorage.getItem('movieAppSession');
-    if (storedSession) setUser(JSON.parse(storedSession));
-
-    setLoading(false);
+    return () => unsubscribe();
   }, []);
 
-  const register = (email, password) => {
-    // Check if email already registered
-    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-      return false;
-    }
-
-    // Derive a display name from the email (part before @)
-    const username = email.split('@')[0];
-
-    const newUser = { email, password, username };
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    localStorage.setItem('movieAppUsersDB', JSON.stringify(updatedUsers));
-
-    // Auto login after register
-    const sessionUser = { email, username, loggedInAt: new Date().toISOString() };
-    setUser(sessionUser);
-    localStorage.setItem('movieAppSession', JSON.stringify(sessionUser));
-    return true;
-  };
-
-  const login = (email, password) => {
-    const existingUser = users.find(
-      u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-
-    if (existingUser) {
-      const sessionUser = {
-        email: existingUser.email,
-        username: existingUser.username,
-        loggedInAt: new Date().toISOString(),
-      };
-      setUser(sessionUser);
-      localStorage.setItem('movieAppSession', JSON.stringify(sessionUser));
+  const register = async (email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Optional: Set the display name right away based on email prefix
+      await updateProfile(userCredential.user, {
+        displayName: email.split('@')[0]
+      });
+      // The onAuthStateChanged listener handles setting the user globally
       return true;
+    } catch (error) {
+      console.error(error);
+      throw error; // Let components catch and display custom errors
     }
-    return false;
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('movieAppSession');
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, users, register, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, register, login, loginWithGoogle, logout, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

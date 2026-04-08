@@ -21,7 +21,7 @@ const Navbar = () => {
     }
   };
 
-  if (!user) return null;
+  // Removed early return: if (!user) return null;
 
   return (
     <nav className="navbar glass">
@@ -43,20 +43,30 @@ const Navbar = () => {
           </form>
         </div>
         <div className="nav-links">
-          <Link to="/watchlist" className="nav-link">
-            <Bookmark size={20} />
-            <span className="nav-label">Watchlist</span>
-          </Link>
-          <Link to="/lists" className="nav-link">
-            <List size={20} />
-            <span className="nav-label">My Lists</span>
-          </Link>
-          <div className="user-menu">
-            <span className="welcome-text">Hi, {user.username}</span>
-            <button onClick={handleLogout} className="btn-icon" aria-label="Logout">
-              <LogOut size={20} />
-            </button>
-          </div>
+          {user ? (
+            <>
+              <Link to="/watchlist" className="nav-link">
+                <Bookmark size={20} />
+                <span className="nav-label">Watchlist</span>
+              </Link>
+              <Link to="/lists" className="nav-link">
+                <List size={20} />
+                <span className="nav-label">My Lists</span>
+              </Link>
+              <div className="user-menu">
+                <span className="welcome-text">Hi, {user.username || 'User'}</span>
+                <button onClick={handleLogout} className="btn-icon" aria-label="Logout">
+                  <LogOut size={20} />
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="user-menu">
+              <Link to="/login" className="btn btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.9rem' }}>
+                Sign In
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

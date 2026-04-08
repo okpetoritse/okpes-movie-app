@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Bookmark } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { useWatchlist } from '../context/WatchlistContext';
 import './MovieRow.css';
 
 const MovieRow = ({ title, movies = [], loading = false }) => {
   const rowRef = useRef(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const { isBookmarked, addToWatchlist, removeFromWatchlist } = useWatchlist();
 
   const scroll = (dir) => {
@@ -52,7 +55,14 @@ const MovieRow = ({ title, movies = [], loading = false }) => {
                     </Link>
                     <button
                       className={`row-bookmark ${bookmarked ? 'active' : ''}`}
-                      onClick={() => bookmarked ? removeFromWatchlist(movie.imdbID) : addToWatchlist(movie)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (!user) {
+                          navigate('/login');
+                          return;
+                        }
+                        bookmarked ? removeFromWatchlist(movie.imdbID) : addToWatchlist(movie);
+                      }}
                       title={bookmarked ? 'Remove from Watchlist' : 'Save to Watchlist'}
                     >
                       <Bookmark size={16} fill={bookmarked ? 'currentColor' : 'none'} />

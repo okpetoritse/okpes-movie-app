@@ -30,8 +30,8 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                <Route path="/movie/:id" element={<ProtectedRoute><MovieDetails /></ProtectedRoute>} />
+                <Route path="/" element={<Home />} />
+                <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/watchlist" element={<ProtectedRoute><Watchlist /></ProtectedRoute>} />
                 <Route path="/lists" element={<ProtectedRoute><CustomLists /></ProtectedRoute>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
