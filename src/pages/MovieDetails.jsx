@@ -155,7 +155,7 @@ const MovieDetails = () => {
 
             {/* Action Buttons */}
             <div className="detail-actions">
-              <button className="btn btn-primary" onClick={() => setShowTrailer(true)}>
+              <button className="btn btn-primary" onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(movie.Title + ' ' + movie.Year + ' official trailer')}`, '_blank')}>
                 <PlayCircle size={20} /> Watch Trailer
               </button>
               <button className="btn btn-glass" onClick={() => window.open(`https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.Title)}`, '_blank')}>
@@ -207,24 +207,7 @@ const MovieDetails = () => {
         )}
       </main>
 
-      {/* ---- TRAILER MODAL ---- */}
-      {showTrailer && (
-        <div className="trailer-modal" onClick={() => setShowTrailer(false)}>
-          <div className="trailer-content glass" onClick={e => e.stopPropagation()}>
-            <button className="close-trailer" onClick={() => setShowTrailer(false)}>✕</button>
-            <h3>{movie.Title} — Trailer</h3>
-            <div className="trailer-video-wrapper">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(movie.Title + ' ' + movie.Year + ' official trailer')}&listType=search`}
-                title={`${movie.Title} Trailer`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ---- TRAILER MODAL REMOVED (YouTube blocks search embeds) ---- */}
 
       {/* ---- ADD TO LIST MODAL ---- */}
       {showListModal && (
