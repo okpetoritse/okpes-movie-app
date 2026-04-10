@@ -9,7 +9,7 @@ const CastCard = ({ name }) => {
   const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=128&background=1F1F1F&color=E50914&bold=true&format=png`;
 
   const handleClick = () => {
-    navigate(`/?q=${encodeURIComponent(name)}`);
+    navigate(`/browse?q=${encodeURIComponent(name)}`);
   };
 
   return (
