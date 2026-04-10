@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Film, UserPlus, Search, ListPlus, Star, ChevronRight } from 'lucide-react';
 import './Landing.css';
 
 const Landing = () => {
-  const [email, setEmail] = useState('');
-  const navigate = useNavigate();
-
-  const handleGetStarted = (e) => {
-    e.preventDefault();
-    // Navigate to register and pass the email address in the state
-    navigate('/register', { state: { email } });
-  };
-
   return (
     <div className="landing-page">
-      {/* Background Collage Layer */}
-      <div className="landing-bg">
-        <img 
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/dd4dfce3-1a39-4b1a-8e19-b7242da17e68/86742114-c001-4800-a127-c9c89ca7bbe4/NG-en-20240515-popsignuptwoweeks-perspective_alpha_website_large.jpg" 
-          alt="Movies backdrop" 
-        />
-        <div className="landing-bg-overlay"></div>
+      {/* Abstract Glowing Background */}
+      <div className="landing-bg-orbs">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
       </div>
 
-      {/* Transparent Landing Navbar */}
+      {/* Modern Transparent Navbar */}
       <nav className="landing-navbar">
         <Link to="/" className="landing-brand">
+          <Film className="brand-icon" size={28} color="#E50914" />
           MyFlix
         </Link>
         <Link to="/login" className="landing-signin-btn">
@@ -34,29 +23,85 @@ const Landing = () => {
         </Link>
       </nav>
 
-      {/* Main Content */}
-      <main className="landing-content">
-        <h1 className="landing-title">Unlimited movies, TV shows, and more</h1>
-        <p className="landing-subtitle">Watch anywhere. Cancel anytime.</p>
-        
-        <p className="landing-prompt">Ready to watch? Enter your email to create or restart your membership.</p>
-        
-        <form onSubmit={handleGetStarted} className="landing-form">
-          <div className="landing-input-group">
-            <input 
-              type="email" 
-              className="landing-input" 
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+      {/* Hero Section */}
+      <main className="landing-hero">
+        <div className="hero-content">
+          <span className="hero-badge">v2.0 Now Live</span>
+          <h1 className="hero-title">Your Ultimate <br/><span>Cinematic</span> Companion.</h1>
+          <p className="hero-subtitle">
+            Don't just watch movies—track them. Build immersive watchlists, rate your favorites, and discover endless content powered by real-time cinematic data.
+          </p>
+          
+          <div className="hero-actions">
+            <Link to="/browse" className="btn-premium">
+              Explore Catalog <Search size={20} />
+            </Link>
+            <Link to="/register" className="btn-glass">
+              Create Free Account <UserPlus size={20} />
+            </Link>
           </div>
-          <button type="submit" className="landing-btn">
-            Get Started <ChevronRight size={24} strokeWidth={3} />
-          </button>
-        </form>
+        </div>
+
+        {/* Abstract UI Representation */}
+        <div className="hero-visual">
+          <div className="glass-card-mockup">
+            <div className="mock-row">
+              <div className="mock-avatar">
+                 <Film size={24} />
+              </div>
+              <div className="mock-lines">
+                <div className="mock-line w-80"></div>
+                <div className="mock-line w-40"></div>
+              </div>
+            </div>
+            <div className="mock-line w-100"></div>
+            <div className="mock-row" style={{ marginTop: '0.5rem' }}>
+              <div className="mock-avatar" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff' }}>
+                 <Star size={24} fill="currentColor" />
+              </div>
+              <div className="mock-lines">
+                <div className="mock-line w-80"></div>
+                <div className="mock-line w-40"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
+
+      {/* Feature Value Proposition */}
+      <section className="landing-features">
+        <div className="features-header">
+          <h2>Why MyFlix?</h2>
+          <p>Everything you need to organize your digital theater.</p>
+        </div>
+        
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon-wrapper">
+              <Search size={28} />
+            </div>
+            <h3>Deep Discovery</h3>
+            <p>Search through over a million titles using our real-time OMDB integration. Read detailed plots, cast info, and instantly find similar movies.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-icon-wrapper">
+              <ListPlus size={28} />
+            </div>
+            <h3>Curate Custom Lists</h3>
+            <p>Create unlimited custom watchlists. Whether it's "Halloween Horror" or "Weekend Binges," keep your movies perfectly organized.</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-icon-wrapper">
+              <Star size={28} />
+            </div>
+            <h3>Rate & Critique</h3>
+            <p>Loved a movie? Hated it? Leave nuanced star ratings and write rich reviews saved securely to your personal cloud profile.</p>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

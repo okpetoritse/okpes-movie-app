@@ -1,183 +1,330 @@
+/* --- PREMIUM ORIGINAL LANDING PAGE --- */
+
 .landing-page {
   position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  color: white;
+  background-color: #050505; /* Deep luxury black */
+  color: #F8F9FA;
+  overflow-x: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* === Ambient Glowing Background Orbs === */
+.landing-bg-orbs {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
   overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* The Background Image Collage with darkened radial gradient overlay exactly like Netflix */
-.landing-bg {
+.orb {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: float 20s infinite ease-in-out alternate;
 }
 
-.landing-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.05); /* Slight zoom to prevent edges showing */
+.orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(111,0,255,0.4) 0%, rgba(20,0,50,0) 70%);
+  top: -10%; left: 10%;
 }
 
-/* The dark vignette over the background */
-.landing-bg-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  background-image: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9) 0,
-    rgba(0, 0, 0, 0.4) 60%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
+.orb-2 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(229,9,20,0.3) 0%, rgba(50,0,0,0) 70%);
+  bottom: -20%; right: -5%;
+  animation-duration: 25s;
+  animation-delay: -5s;
 }
 
-/* Netflix Style Transparent Navbar */
+@keyframes float {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(50px) scale(1.1); }
+}
+
+/* === Navbar === */
 .landing-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
+  padding: 2rem 5%;
   z-index: 10;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .landing-brand {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #E50914; /* Netflix Red */
+  background: linear-gradient(90deg, #fff, #a5a5a5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
-  letter-spacing: 1px;
 }
 
 .landing-signin-btn {
-  background-color: #E50914;
+  background: rgba(255, 255, 255, 0.1);
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px; /* Netflix buttons have sharp slightly rounded edges */
-  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 500;
   text-decoration: none;
-  font-size: 1rem;
-  transition: background-color 0.2s;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
 }
 
 .landing-signin-btn:hover {
-  background-color: #C11119;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Content */
-.landing-content {
+/* === Hero Section (Split Layout) === */
+.landing-hero {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rem 5% 4rem;
+  z-index: 1;
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 4rem;
+}
+
+.hero-content {
+  flex: 1.2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0 5%;
-  z-index: 1;
-  margin-top: 4rem; /* offset for navbar */
+  gap: 1.5rem;
 }
 
-.landing-title {
-  font-size: 4rem;
-  font-weight: 900;
-  max-width: 800px;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
+.hero-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(229, 9, 20, 0.15);
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  color: #ff4d4d;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: fit-content;
 }
 
-.landing-subtitle {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: 1.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin: 0;
 }
 
-.landing-prompt {
+.hero-title span {
+  background: linear-gradient(90deg, #E50914, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
   font-size: 1.25rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
-}
-
-/* Email Form */
-.landing-form {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  color: #a0aab2;
+  line-height: 1.6;
   max-width: 600px;
-  gap: 0.5rem;
+  margin: 0;
 }
 
-.landing-input-group {
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-premium {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #E50914, #C11119);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
+}
+
+.btn-glass {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* === Hero Visual (Floating Mockup) === */
+.hero-visual {
   flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float 6s infinite ease-in-out alternate;
+}
+
+.glass-card-mockup {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
   position: relative;
 }
 
-.landing-input {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
-  backdrop-filter: blur(5px);
+.glass-card-mockup::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 100%);
+  z-index: -1;
+  border-radius: 26px;
 }
 
-.landing-input:focus {
-  outline: none;
-  border-color: white;
-}
-
-.landing-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.landing-btn {
-  background-color: #E50914;
-  color: white;
-  border: none;
-  padding: 1rem 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
+.mock-row {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.2s;
+  gap: 1rem;
 }
 
-.landing-btn:hover {
-  background-color: #C11119;
+.mock-avatar {
+  width: 50px; height: 50px;
+  background: rgba(229, 9, 20, 0.2);
+  border-radius: 12px;
+  display: flex; justify-content: center; align-items: center;
+  color: #E50914;
 }
 
-/* Responsiveness */
-@media (max-width: 960px) {
-  .landing-title { font-size: 3rem; }
-  .landing-subtitle { font-size: 1.25rem; }
+.mock-lines {
+  display: flex; flex-direction: column; gap: 0.5rem; flex: 1;
+}
+
+.mock-line {
+  height: 8px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mock-line.w-80 { width: 80%; }
+.mock-line.w-40 { width: 40%; }
+.mock-line.w-100 { width: 100%; height: 60px; border-radius: 8px; margin-top: 1rem; }
+
+/* === Features Section === */
+.landing-features {
+  padding: 6rem 5%;
+  background: linear-gradient(to bottom, transparent, rgba(10,10,10,1));
+  z-index: 1;
+  position: relative;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.features-header h2 {
+  font-size: 3rem; font-weight: 800; margin-bottom: 1rem;
+}
+
+.features-header p {
+  color: #a0aab2; font-size: 1.1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(229, 9, 20, 0.3);
+}
+
+.feature-icon-wrapper {
+  width: 60px; height: 60px;
+  background: rgba(229, 9, 20, 0.1);
+  color: #E50914;
+  display: flex; justify-content: center; align-items: center;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #a0aab2; line-height: 1.5;
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .landing-hero { flex-direction: column; text-align: center; padding-top: 4rem; }
+  .hero-content { align-items: center; }
+  .hero-title { font-size: 3.5rem; }
+  .glass-card-mockup { margin-top: 2rem; }
 }
 
 @media (max-width: 600px) {
-  .landing-navbar { padding: 1.5rem 1rem; }
-  .landing-brand { font-size: 1.8rem; }
-  .landing-title { font-size: 2rem; }
-  .landing-prompt { font-size: 1.1rem; }
-  .landing-form { flex-direction: column; gap: 1rem; }
-  .landing-input { padding: 0.8rem; }
-  .landing-btn { padding: 0.75rem 1.25rem; font-size: 1.25rem; }
+  .hero-title { font-size: 2.5rem; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn-premium, .btn-glass { justify-content: center; }
 }
