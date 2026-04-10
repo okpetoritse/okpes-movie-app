@@ -38,7 +38,7 @@ const CustomLists = () => {
       
       // Copy to clipboard
       await navigator.clipboard.writeText(shareUrl);
-      alert('Link generated and copied to your clipboard! Paste it anywhere to share your list.');
+      // Removed intrusive alert popup per user request
     } catch (e) {
       console.error("Error creating shared list: ", e);
       alert('Failed to generate link. Check console for details.');
