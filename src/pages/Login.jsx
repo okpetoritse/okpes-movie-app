@@ -45,7 +45,7 @@ const Login = () => {
       try {
         setLoading(true);
         await login(email, password);
-        navigate('/');
+        navigate('/browse');
       } catch (err) {
         if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
            setError('Invalid email or password.');
@@ -64,7 +64,7 @@ const Login = () => {
     try {
       setLoading(true);
       await loginWithGoogle();
-      navigate('/');
+      navigate('/browse');
     } catch (err) {
       setError('Google sign-in failed or was cancelled.');
       setLoading(false);

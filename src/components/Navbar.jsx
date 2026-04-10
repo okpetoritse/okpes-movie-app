@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Film, LogOut, Bookmark, Search, List } from 'lucide-react';
 import './Navbar.css';
@@ -7,6 +7,7 @@ import './Navbar.css';
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleLogout = () => {
@@ -17,16 +18,17 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      navigate(`/?q=${encodeURIComponent(searchTerm)}`);
+      navigate(`/browse?q=${encodeURIComponent(searchTerm)}`);
     }
   };
 
   // Removed early return: if (!user) return null;
+  if (location.pathname === '/') return null;
 
   return (
     <nav className="navbar glass">
       <div className="container nav-content">
-        <Link to="/" className="brand">
+        <Link to="/browse" className="brand">
           <Film className="brand-icon" />
           <span className="brand-text">MyFlix</span>
         </Link>

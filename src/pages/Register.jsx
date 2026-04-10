@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
@@ -20,6 +20,14 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const { register, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // If the landing page passed an email, pre-fill it!
+    if (location.state?.email) {
+      setEmail(location.state.email);
+    }
+  }, [location.state]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -48,7 +56,7 @@ const Register = () => {
     try {
       setLoading(true);
       await register(email, password);
-      navigate('/');
+      navigate('/browse');
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         setError('An account with this email already exists.');
@@ -66,7 +74,7 @@ const Register = () => {
     try {
       setLoading(true);
       await loginWithGoogle();
-      navigate('/');
+      navigate('/browse');
     } catch (err) {
       setError('Google sign-in failed or was cancelled.');
       setLoading(false);

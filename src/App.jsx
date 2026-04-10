@@ -6,6 +6,7 @@ import { ReviewsProvider } from './context/ReviewsContext';
 import { CustomListsProvider } from './context/CustomListsContext';
 
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MovieDetails from './pages/MovieDetails';
@@ -30,7 +31,8 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/browse" element={<Home />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/watchlist" element={<ProtectedRoute><Watchlist /></ProtectedRoute>} />
                 <Route path="/lists" element={<ProtectedRoute><CustomLists /></ProtectedRoute>} />
