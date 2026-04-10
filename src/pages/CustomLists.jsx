@@ -5,7 +5,9 @@ import { useReviews } from '../context/ReviewsContext';
 import Navbar from '../components/Navbar';
 import MovieCard from '../components/MovieCard';
 import StarRating from '../components/StarRating';
-import { Plus, Trash2, List } from 'lucide-react';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { Plus, Trash2, List, Share2 } from 'lucide-react';
 import './CustomLists.css';
 
 const CustomLists = () => {
@@ -14,6 +16,36 @@ const CustomLists = () => {
   const navigate = useNavigate();
   const [newName, setNewName] = useState('');
   const [activeTab, setActiveTab] = useState('lists'); // 'lists' | 'reviews'
+  const [sharingId, setSharingId] = useState(null);
+
+  const handleShareList = async (list) => {
+    if (list.movies.length === 0) {
+      alert("You can't share an empty list!");
+      return;
+    }
+    
+    try {
+      setSharingId(list.id);
+      // Write the list to Firestore
+      const docRef = await addDoc(collection(db, "shared_lists"), {
+        name: list.name,
+        movies: list.movies,
+        createdAt: new Date().toISOString()
+      });
+      
+      // Construct the shareable URL
+      const shareUrl = `${window.location.origin}/list/${docRef.id}`;
+      
+      // Copy to clipboard
+      await navigator.clipboard.writeText(shareUrl);
+      alert('Link generated and copied to your clipboard! Paste it anywhere to share your list.');
+    } catch (e) {
+      console.error("Error creating shared list: ", e);
+      alert('Failed to generate link. Check console for details.');
+    } finally {
+      setSharingId(null);
+    }
+  };
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -59,6 +91,15 @@ const CustomLists = () => {
                     <h3>{list.name}</h3>
                     <div className="list-card-actions">
                       <span className="list-count">{list.movies.length} movies</span>
+                      <button 
+                        className="btn-icon" 
+                        onClick={() => handleShareList(list)} 
+                        title="Share list" 
+                        disabled={sharingId === list.id}
+                        style={{ marginRight: '0.5rem', color: '#3b82f6' }}
+                      >
+                        <Share2 size={16} />
+                      </button>
                       <button className="btn-icon" onClick={() => deleteList(list.id)} title="Delete list">
                         <Trash2 size={16} color="var(--color-primary)" />
                       </button>

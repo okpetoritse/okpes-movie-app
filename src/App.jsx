@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import MovieDetails from './pages/MovieDetails';
 import Watchlist from './pages/Watchlist';
 import CustomLists from './pages/CustomLists';
+import SharedView from './pages/SharedView';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/browse" element={<Home />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
+                <Route path="/list/:shareId" element={<SharedView />} />
                 <Route path="/watchlist" element={<ProtectedRoute><Watchlist /></ProtectedRoute>} />
                 <Route path="/lists" element={<ProtectedRoute><CustomLists /></ProtectedRoute>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
